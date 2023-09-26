@@ -23,7 +23,7 @@ public class PublisherController {
     }
 
     @GetMapping("/{id}")
-    public Publisher getOne(@PathVariable(name = "id") int id) {
+    public Publisher getOne(@PathVariable int id) {
         if (id < this.publishers.size()) {
             return this.publishers.get(id);
         }
@@ -33,13 +33,20 @@ public class PublisherController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Publisher create(@RequestBody Publisher publisher) {
-        this.publishers.add(publisher);
-        return publisher;
+        if (!publishers.contains(publisher)) {
+            if (publisher.getName() != null && publisher.getCity() != null) {
+                this.publishers.add(publisher);
+                return publisher;
+            } else {
+                return null;
+            }
+        }
+        return null;
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Publisher update(@PathVariable (name = "id") int id, @RequestBody Publisher author) {
+    public Publisher update(@PathVariable int id, @RequestBody Publisher author) {
         if (id < this.publishers.size()) {
             this.publishers.get(id).setName(author.getName());
             this.publishers.get(id).setCity(author.getCity());
@@ -49,7 +56,7 @@ public class PublisherController {
     }
 
     @DeleteMapping("/{id}")
-    public Publisher delete(@PathVariable (name = "id") int id) {
+    public Publisher delete(@PathVariable int id) {
         if (id < this.publishers.size()) {
             return this.publishers.remove(id);
         }

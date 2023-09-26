@@ -9,6 +9,11 @@ public class Publisher {
         this.city = city;
     }
 
+    public Publisher(String name) {
+        this.name = name;
+        this.city = "Unknown";
+    }
+
     public String getName() {
         return name;
     }
